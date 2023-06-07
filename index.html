@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quotes Generator</title>
+</head>
+<style>
+.container{
+    margin: 15vh auto 0 auto;
+    background-color: rgb(88, 88, 199);
+    border-radius: 8px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
+    width: 400px;
+}
+h3{
+    padding-top: 10px;
+    color: white;
+}
+.quotes_container{
+    background-image: url('wallpaperflare.com_wallpaper.jpg');
+    border-radius: 10px;
+    margin-left: 23px;
+    width:350px;
+    height: 270px;
+}
+#main_quotes{
+    padding: 70px 0px 70px;
+    font-weight: 500px;
+    line-height: 30px;
+    color: white;
+    width: auto;
+}
+button{
+    background-color: rgb(70, 172, 70);
+    border-radius: 8px;
+    font-style: italic;
+    cursor: pointer;
+    height: 40px;
+    width: 160px;
+}
+button:hover{
+    color: white;
+}
+</style>
+<body>
+    <div class="container">
+        <h3>Your Quotes for today</h3>
+        <div class="quotes_container">
+            <div id="main_quotes">
+
+            </div>
+        </div>
+        <br>
+        <button><strong>Generate Quote</strong></button>
+    </div>
+</body>
+<script>
+const main_quotes = document.getElementById('main_quotes');
+    const quotes = []; // Array to store the fetched quotes
+    
+    function fetchQuotes() {
+      fetch('https://type.fit/api/quotes')
+        .then(res => res.json())
+        .then(data => {
+          quotes.length = 0; // Clear the quotes array
+          quotes.push(...data); // Add fetched quotes to the array
+          displayRandomQuote();
+        });
+    }
+    
+    function displayRandomQuote() {
+      const randomIndex = Math.floor(Math.random() * quotes.length);
+      const randomQuote = quotes[randomIndex];
+      main_quotes.innerHTML = `"${randomQuote.text}"`;
+    }
+    
+    fetchQuotes();
+    document.querySelector('button').addEventListener('click', fetchQuotes);
+</script>
+</html>
